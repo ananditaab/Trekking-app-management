@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}
+User Dashboard
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">
+        User Dashboard
+    </h2>
+
+    <p class="text-center">
+        Welcome {{ current_user.name }}
+    </p>
+
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h5>Total Treks</h5>
+                    <h2>{{ total_treks }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h5>Your Bookings</h5>
+                    <h2>{{ booked_treks }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h5>Available Treks</h5>
+                    <h2>{{ available_treks }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <form method="GET" action="{{ url_for('user.dashboard') }}" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <input type="text" name="search" class="form-control" placeholder="Search by trek name" value="{{ search }}">
+        </div>
+        <div class="col-md-3">
+            <select name="difficulty" class="form-select">
+                <option value="">All Difficulty</option>
+                <option value="Easy" {% if difficulty == 'Easy' %}selected{% endif %}>Easy</option>
+                <option value="Moderate" {% if difficulty == 'Moderate' %}selected{% endif %}>Moderate</option>
+                <option value="Hard" {% if difficulty == 'Hard' %}selected{% endif %}>Hard</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <input type="text" name="location" class="form-control" placeholder="Search by location" value="{{ location }}">
+        </div>
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-dark w-100">Filter</button>
+        </div>
+    </form>
+
+    <h3 class="mb-3">
+        Available Treks
+    </h3>
+
+    <table class="table table-striped table-bordered">
+        <thead class="table-dark">
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Difficulty</th>
+                <th>Duration</th>
+                <th>Available Slots</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for trek in treks %}
+            <tr>
+                <td>{{ trek.name }}</td>
+                <td>{{ trek.location }}</td>
+                <td>{{ trek.difficulty }}</td>
+                <td>{{ trek.duration }} Days</td>
+                <td>{{ trek.available_slots }}</td>
+                <td>{{ trek.status }}</td>
+                <td>
+                    <a href="{{ url_for('user.book_trek', trek_id=trek.id) }}" class="btn btn-success btn-sm">
+                        Book Trek
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="mb-3 text-end">
+    <a href="{{ url_for('user.history') }}" class="btn btn-primary">
+        View My Bookings
+    </a>
+</div>
+</div>
+{% endblock %}

@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block title %}
+Add Trek
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <div class="card shadow p-4 mx-auto" style="max-width:700px;">
+        <h2 class="text-center mb-4">Add New Trek</h2>
+
+        <form method="POST" action="{{ url_for('admin.add_trek') }}">
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Trek Name</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" class="form-control" id="location" name="location" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="difficulty" class="form-label">Difficulty</label>
+                <select class="form-select" id="difficulty" name="difficulty" required>
+                    <option value="">Select Difficulty</option>
+                    <option value="Easy">Easy</option>
+                    <option value="Moderate">Moderate</option>
+                    <option value="Hard">Hard</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="duration" class="form-label">Duration (in Days)</label>
+                <input type="number" class="form-control" id="duration" name="duration" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="total_slots" class="form-label">Total Slots</label>
+                <input type="number" class="form-control" id="total_slots" name="total_slots" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="assigned_staff_id" class="form-label">Assign Staff</label>
+                <select class="form-select" id="assigned_staff_id" name="assigned_staff_id">
+                    <option value="">Select Staff</option>
+                    {% for staff in staff_members %}
+                    <option value="{{ staff.id }}">{{ staff.name }} (ID: {{ staff.id }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="status" class="form-label">Status</label>
+                <select class="form-select" id="status" name="status" required>
+                    <option value="">Select Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approved</option>
+                    <option value="open">Open</option>
+                    <option value="closed">Closed</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="start_date" class="form-label">Start Date</label>
+                <input type="date" class="form-control" id="start_date" name="start_date" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="end_date" class="form-label">End Date</label>
+                <input type="date" class="form-control" id="end_date" name="end_date" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea class="form-control" id="description" name="description" rows="4"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-success">Add Trek</button>
+            <a href="{{ url_for('admin.dashboard') }}" class="btn btn-secondary">Cancel</a>
+
+        </form>
+    </div>
+
+</div>
+{% endblock %}

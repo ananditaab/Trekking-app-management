@@ -1,0 +1,22 @@
+<nav class="navbar mb-3 navbar-light bg-light text-center">
+    <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">
+            <a href="{{ url_for('main.index') }}">Home</a>
+            <a href="{{ url_for('auth.login') }}">Login</a>
+            <a href="{{ url_for('auth.register') }}">Register</a>
+
+            {% if current_user.is_authenticated %}
+                {% if current_user.role == "admin" %}
+                    <a href="{{ url_for('admin.dashboard') }}">Admin Dashboard</a>
+                {% elif current_user.role == "staff" %}
+                    <a href="{{ url_for('staff.dashboard') }}">Staff Dashboard</a>
+                {% elif current_user.role == "user" %}
+                    <a href="{{ url_for('user.dashboard') }}">User Dashboard</a>
+                    <a href="{{ url_for('user.treks') }}">All Treks</a>
+                    <a href="{{ url_for('user.history') }}">History</a>
+                {% endif %}
+                <a href="{{ url_for('auth.logout') }}">Logout</a>
+            {% endif %}
+        </span>
+    </div>
+</nav>

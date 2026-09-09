@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+Manage Users
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Manage Users</h2>
+
+    <form method="GET" action="{{ url_for('admin.manage_users') }}" class="row g-3 mb-4">
+        <div class="col-md-10">
+            <input
+                type="text"
+                name="search"
+                class="form-control"
+                placeholder="Search by User ID, Name or Email"
+                value="{{ search }}">
+        </div>
+
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-dark w-100">Search</button>
+        </div>
+    </form>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>User ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.id }}</td>
+                        <td>{{ user.name }}</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.phone }}</td>
+                        <td>{{ user.status }}</td>
+                        <td>
+                            {% if user.status != "blacklisted" %}
+                            <a href="{{ url_for('admin.blacklist_user', user_id=user.id) }}" class="btn btn-danger btn-sm">
+                                Blacklist
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

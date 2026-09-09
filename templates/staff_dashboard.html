@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}
+Staff Dashboard
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">
+        Staff Dashboard
+    </h2>
+
+    <p class="text-center">
+        Welcome, {{ current_user.name }}
+    </p>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Assigned Treks
+                    </h5>
+                    <h2>
+                        {{ assigned_treks }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Participants
+                    </h5>
+                    <h2>
+                        {{ participants }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow text-center">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        Completed Treks
+                    </h5>
+                    <h2>
+                        {{ completed }}
+                    </h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <h3 class="mb-3">
+        My Assigned Treks
+    </h3>
+
+    <table class="table table-bordered table-striped">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Available Slots</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for trek in treks %}
+            <tr>
+                <td>{{ trek.id }}</td>
+                <td>{{ trek.name }}</td>
+                <td>{{ trek.location }}</td>
+                <td>{{ trek.available_slots }}</td>
+                <td>{{ trek.status }}</td>
+                <td>
+                    <a href="{{ url_for('staff.update_trek', trek_id=trek.id) }}" class="btn btn-warning btn-sm">
+                        Update
+                    </a>
+
+                    <a href="{{ url_for('staff.complete_trek', trek_id=trek.id) }}" class="btn btn-success btn-sm">
+                        Complete
+                    </a>
+
+                    <a href="{{ url_for('staff.participants') }}" class="btn btn-info btn-sm">
+                        Participants
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

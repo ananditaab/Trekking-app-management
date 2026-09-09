@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}
+Manage Staff
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Manage Staff</h2>
+
+    <form method="GET" action="{{ url_for('admin.manage_staff') }}" class="row g-3 mb-4">
+        <div class="col-md-10">
+            <input
+                type="text"
+                name="search"
+                class="form-control"
+                placeholder="Search by Staff ID, Name or Email"
+                value="{{ search }}">
+        </div>
+
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-dark w-100">Search</button>
+        </div>
+    </form>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Staff ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for staff in staff_members %}
+                    <tr>
+                        <td>{{ staff.id }}</td>
+                        <td>{{ staff.name }}</td>
+                        <td>{{ staff.email }}</td>
+                        <td>{{ staff.phone }}</td>
+                        <td>{{ staff.status }}</td>
+                        <td>
+                            {% if staff.status != "approved" %}
+                            <a href="{{ url_for('admin.approve_staff', user_id=staff.id) }}" class="btn btn-success btn-sm">
+                                Approve
+                            </a>
+                            {% endif %}
+
+                            {% if staff.status != "blacklisted" %}
+                            <a href="{{ url_for('admin.blacklist_staff', user_id=staff.id) }}" class="btn btn-danger btn-sm">
+                                Blacklist
+                            </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

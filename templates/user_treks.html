@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+All Treks
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">All Treks</h2>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Difficulty</th>
+                        <th>Duration</th>
+                        <th>Total Slots</th>
+                        <th>Available Slots</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for trek in treks %}
+                    <tr>
+                        <td>{{ trek.id }}</td>
+                        <td>{{ trek.name }}</td>
+                        <td>{{ trek.location }}</td>
+                        <td>{{ trek.difficulty }}</td>
+                        <td>{{ trek.duration }} Days</td>
+                        <td>{{ trek.total_slots }}</td>
+                        <td>{{ trek.available_slots }}</td>
+                        <td>{{ trek.status }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <a href="{{ url_for('user.dashboard') }}" class="btn btn-secondary mt-3">Back</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

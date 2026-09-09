@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block title %}
+Admin Dashboard
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Admin Dashboard</h2>
+    <p>Welcome, Admin!</p>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card text-center shadow">
+                <div class="card-body">
+                    <h5>Total Treks</h5>
+                    <h2>{{ total_treks }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow">
+                <div class="card-body">
+                    <h5>Total Users</h5>
+                    <h2>{{ total_users }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow">
+                <div class="card-body">
+                    <h5>Total Staff</h5>
+                    <h2>{{ total_staff }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow">
+                <div class="card-body">
+                    <h5>Total Bookings</h5>
+                    <h2>{{ total_bookings }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <h4>Quick Actions</h4>
+            <div class="d-grid gap-4">
+                <a href="{{ url_for('admin.manage_treks') }}" class="btn btn-success">Manage Treks</a>
+                <a href="{{ url_for('admin.manage_staff') }}" class="btn btn-info">Manage Staff</a>
+                <a href="{{ url_for('admin.manage_users') }}" class="btn btn-success">Manage Users</a>
+                <a href="{{ url_for('admin.add_trek') }}" class="btn btn-info">Add Treks</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <h4>Available Treks</h4>
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for trek in treks %}
+                    <tr>
+                        <td>{{ trek.name }}</td>
+                        <td>{{ trek.location }}</td>
+                        <td>{{ trek.status }}</td>
+                        <td>
+                            <a href="{{ url_for('admin.edit_trek', trek_id=trek.id) }}" class="btn btn-primary btn-sm">Edit</a>
+                            <a href="{{ url_for('admin.delete_trek', trek_id=trek.id) }}" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

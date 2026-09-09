@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}
+Booking History
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Booking History</h2>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Booking ID</th>
+                        <th>Trek Name</th>
+                        <th>Location</th>
+                        <th>Status</th>
+                        <th>Booking Date</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for booking in bookings %}
+                    <tr>
+                        <td>{{ booking.id }}</td>
+                        <td>{{ booking.trek.name }}</td>
+                        <td>{{ booking.trek.location }}</td>
+                        <td>{{ booking.status }}</td>
+                        <td>{{ booking.booking_date.strftime('%d-%m-%Y') }}</td>
+                        <td>
+                            <a href="{{ url_for('user.cancel_booking', booking_id=booking.id) }}" class="btn btn-danger btn-sm">
+                                Cancel
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            <a href="{{ url_for('user.dashboard') }}" class="btn btn-secondary mt-3">Back</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
